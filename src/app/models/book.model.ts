@@ -19,7 +19,7 @@ const bookSchema = new Schema<IBook>(
       uppercase: true,
     },
     isbn: { type: String, required: true, unique: true, trim: true },
-    description: { type: String, required: true },
+    description: { type: String },
     copies: {
       type: Number,
       min: 0,
@@ -31,7 +31,7 @@ const bookSchema = new Schema<IBook>(
         message: (props) => `Copies must be an integer, got ${props.value}`
       },
     },
-    available: { type: Boolean, required: true },
+    available: { type: Boolean, default:true },
   },
   {
     versionKey: false,
