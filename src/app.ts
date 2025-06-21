@@ -1,7 +1,12 @@
 import express, { Application, NextFunction, Request, Response } from "express";
+import { bookRoutes } from "./app/controllers/book.controller";
+import { ZodError } from "zod";
 const app: Application = express();
 
 app.use(express.json());
+
+
+app.use("/api/books", bookRoutes)
 
 app.get("/", async (req: Request, res: Response, next: NextFunction) => {
   try {
@@ -25,11 +30,24 @@ app.use((req: Request, res: Response, next: NextFunction) => {
 
 // global error handler 
 app.use((error: any, req: Request, res: Response, next: NextFunction) => {
+    if (error instanceof ZodError) {
+        // Handle Zod validation errors
+        const messages = error.issues.map(issue => issue.message);
+        res.status(400).send({
+            message: messages.join("; "),
+            success: false,
+            error: {
+                issues: error.issues,
+                name: error.name
+            }
+        });
+    } else {
         res.status(400).send({
             message: error.message || "An unexpected error occurred",
             success: false,
             error: error
-        })
+        });
+    }
 });
 
 export default app;
