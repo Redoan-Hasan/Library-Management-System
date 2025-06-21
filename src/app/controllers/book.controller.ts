@@ -33,32 +33,7 @@ bookRoutes.get("", async (req: Request, res: Response, next: NextFunction) => {
     const { filter, sortBy, sort, limit } = req.query;
     let books: Document[] = [];
 
-    // if user pass the filter query alone 
-    if (filter) {
-      books = await Book.find({ genre: String(filter).toUpperCase() }).limit(
-        10
-      );
-    }
-
-    // if user pass the sortBy and sort query alone
-    else if (sortBy && sort) {
-      books = await Book.find()
-        .sort({
-          [String(sortBy)]:
-            String(sort).toLowerCase() === "asc"
-              ? 1
-              : String(sort).toLowerCase() === "desc"
-              ? -1
-              : 1,
-        })
-        .limit(10);
-    }
-    // if user pass the limit query alone 
-    else if (limit) {
-      books = await Book.find().limit(Number(limit));
-    } 
-    // if user pass the filter, sortBy, sort together 
-    else if (filter && sortBy && sort) {
+    if (filter || sortBy || sort || limit) {
       books = await Book.find({ genre: String(filter).toUpperCase() })
         .sort({
           [String(sortBy)]:
@@ -68,24 +43,9 @@ bookRoutes.get("", async (req: Request, res: Response, next: NextFunction) => {
               ? -1
               : 1,
         })
-        .limit(10);
-    }
-    // if user pass the filter, sortBy, sort and limit together 
-    else if (filter && sortBy && sort && limit) {
-      books = await Book.find({ genre: String(filter).toUpperCase() })
-        .sort({
-          [String(sortBy)]:
-            String(sort).toLowerCase() === "asc"
-              ? 1
-              : String(sort).toLowerCase() === "desc"
-              ? -1
-              : 1,
-        })
-        .limit(Number(limit));
-    } 
-    if user does not pass any query 
-    else {
-      books = await Book.find();
+        .limit(Number(limit) || 10);
+    } else {
+      books = await Book.find().limit(10);
     }
 
     res.status(200).send({
@@ -97,3 +57,5 @@ bookRoutes.get("", async (req: Request, res: Response, next: NextFunction) => {
     next(error);
   }
 });
+
+//Get Book by ID
