@@ -85,6 +85,9 @@ bookRoutes.patch(
       const book = await Book.findByIdAndUpdate(id, updatedData, {
         new: true,
       });
+      if(book){
+        book.updateBookAvailability();
+      }
       res.status(200).send({
         success: true,
         message: "Book updated successfully",

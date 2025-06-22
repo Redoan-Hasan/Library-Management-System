@@ -1,7 +1,7 @@
-import { model, Schema } from "mongoose";
-import { IBook } from "../interfaces/book.interface";
+import { Model, model, Schema } from "mongoose";
+import { bookInstanceMethod, IBook } from "../interfaces/book.interface";
 
-const bookSchema = new Schema<IBook>(
+const bookSchema = new Schema<IBook, Model<IBook, {}, bookInstanceMethod>>(
   {
     title: { type: String, required: true, trim: true },
     author: { type: String, required: true, trim: true },
@@ -28,10 +28,10 @@ const bookSchema = new Schema<IBook>(
         validator: function (value: number) {
           return Number.isInteger(value);
         },
-        message: (props) => `Copies must be an integer, got ${props.value}`
+        message: (props) => `Copies must be an integer, got ${props.value}`,
       },
     },
-    available: { type: Boolean, default:true },
+    available: { type: Boolean, default: true },
   },
   {
     versionKey: false,
@@ -39,4 +39,19 @@ const bookSchema = new Schema<IBook>(
   }
 );
 
-export const Book = model<IBook>("Book", bookSchema);
+//instance method
+bookSchema.method("updateBookAvailability", async function () {
+  if (this.copies === 0) {
+    this.available = false;
+    await this.save();
+  }
+  else if(Number(this.copies) > 0){
+    this.available = true;
+    await this.save();
+  }
+});
+
+export const Book = model<IBook, Model<IBook, {}, bookInstanceMethod>>(
+  "Book",
+  bookSchema
+);
