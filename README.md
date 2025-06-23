@@ -26,7 +26,6 @@ Welcome to the **Library Management System**! This is a robust RESTful API built
 | **typescript** | Type safety and modern JS features     |
 | **zod**        | Runtime schema validation              |
 | **dotenv**     | Environment variable management        |
-| **nodemon**    | Auto-restart server during development |
 
 ---
 
