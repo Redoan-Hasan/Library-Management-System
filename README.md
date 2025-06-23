@@ -1,6 +1,6 @@
 # 📚 Library Management System API
 
-[🔗 View Live API](https://your-live-api-url.com)
+**🌐 [View Live API Here! 🚀](https://your-live-api-url.com)**
 
 Welcome to the **Library Management System**! This is a robust RESTful API built with **Express**, **TypeScript**, and **MongoDB (Mongoose)** for managing books and borrow records in a library.
 
@@ -19,7 +19,7 @@ Welcome to the **Library Management System**! This is a robust RESTful API built
 
 ## 📦 Packages Used
 
-| Package        | Purpose                                |
+| 📦 Package     | 📝 Purpose                             |
 | -------------- | -------------------------------------- |
 | **express**    | Web framework for Node.js              |
 | **mongoose**   | MongoDB object modeling and queries    |
@@ -238,23 +238,28 @@ All error responses follow this structure:
 
 ## 📝 Project Structure
 
+<details>
+<summary>Click to expand</summary>
+
+```text
+📦 src
+ ┣ 📄 app.ts
+ ┣ 📄 server.ts
+ ┗ 📂 app
+    ┣ 📂 controllers      # 📚 Route handlers
+    ┃ ┣ 📄 book.controller.ts
+    ┃ ┗ 📄 borrow.controller.ts
+    ┣ 📂 models           # 🗃️ Mongoose schemas
+    ┃ ┣ 📄 book.model.ts
+    ┃ ┗ 📄 borrow.model.ts
+    ┣ 📂 zodSchemas       # 🛡️ Zod validation schemas
+    ┃ ┣ 📄 book.zodSchema.ts
+    ┃ ┗ 📄 borrow.zodSchema.ts
+    ┗ 📂 interfaces       # 📝 TypeScript interfaces
+      ┣ 📄 book.interface.ts
+      ┗ 📄 borrow.interface.ts
 ```
-src/
-  app.ts
-  server.ts
-  app/
-    controllers/
-      book.controller.ts
-      borrow.controller.ts
-    models/
-      book.model.ts
-      borrow.model.ts
-    zodSchemas/
-      book.zodSchema.ts
-      borrow.zodSchema.ts
-    interfaces/
-      book.interface.ts
-      borrow.interface.ts
-```
+
+</details>
 
 ---
