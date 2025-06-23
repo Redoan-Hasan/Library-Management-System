@@ -50,28 +50,35 @@ borrowRoutes.get(
         {
           $group: {
             _id: "$book",
-            totalQuantity: { $sum: "$quantity" }
-          }
+            totalQuantity: { $sum: "$quantity" },
+          },
         },
         {
           $lookup: {
             from: "books",
             localField: "_id",
             foreignField: "_id",
-            as: "bookDetails"
-          }
+            as: "bookDetails",
+          },
         },
         { $unwind: "$bookDetails" },
         {
           $project: {
             _id: 0,
+
+            //we can do it with unwind then we have to use $arrayElemAt to get the first element of the array if it gives you only one element then you can use it without unwind but if you have multiple elements then you have to use unwind
+            // book: {
+            //   title: { $arrayElemAt: ["$bookDetails.title", 0] },
+            //   isbn: { $arrayElemAt: ["$bookDetails.isbn", 0] },
+            // },
+
             book: {
               title: "$bookDetails.title",
-              isbn: "$bookDetails.isbn"
+              isbn: "$bookDetails.isbn",
             },
-            totalQuantity: 1
-          }
-        }
+            totalQuantity: 1,
+          },
+        },
       ]);
       res.send({
         success: true,

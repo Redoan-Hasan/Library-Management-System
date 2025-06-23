@@ -51,6 +51,16 @@ bookSchema.method("updateBookAvailability", async function () {
   }
 });
 
+//hooks 
+bookSchema.pre("save", function (next) {
+  console.log(`Book "${this.title}" is about to be saved.`);
+  next();
+});
+
+bookSchema.post("save", function (doc) {
+  console.log(`Book "${doc.title}" was saved.`);
+});
+
 export const Book = model<IBook, Model<IBook, {}, bookInstanceMethod>>(
   "Book",
   bookSchema

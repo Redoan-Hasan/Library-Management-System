@@ -17,9 +17,7 @@ bookRoutes.post(
       res.status(201).json({
         success: true,
         message: "Book created successfully",
-        data: {
-          book,
-        },
+        data: book,
       });
     } catch (error: any) {
       next(error);
