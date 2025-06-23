@@ -238,8 +238,6 @@ All error responses follow this structure:
 
 ## 📝 Project Structure
 
-<details>
-<summary>Click to expand</summary>
 
 ```text
 📦 src
